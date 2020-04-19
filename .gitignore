@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+-ffunction-sections
+
+*.depend
+
+*.layout
