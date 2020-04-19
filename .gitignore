@@ -36,3 +36,5 @@
 *.depend
 
 *.layout
+
+bin/Release/
