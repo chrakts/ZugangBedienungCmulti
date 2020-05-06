@@ -88,7 +88,7 @@ void TWI_MasterInit(TWI_Master_t *twi,
                     uint8_t baudRateRegisterSetting)
 {
 	twi->interface = module;
-	twi->interface->CTRL = TWI_SDAHOLD_50NS_gc; // ########################### war abgeändert in TWI_SDAHOLD_bm
+	twi->interface->CTRL = TWI_SDAHOLD_50NS_gc; // ########################### war abgeï¿½ndert in TWI_SDAHOLD_bm
 	twi->interface->MASTER.CTRLA = intLevel |
 	                               TWI_MASTER_RIEN_bm |
 	                               TWI_MASTER_WIEN_bm |
