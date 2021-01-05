@@ -50,6 +50,7 @@
 			<Add directory="/home/chrak/Daten/Software/repositories/xmegaClocks" />
 			<Add directory="/home/chrak/Daten/Software/repositories/communication" />
 			<Add directory="/home/chrak/Daten/Software/repositories/ComReceiver" />
+			<Add directory="/home/chrak/Daten/Software/repositories/timer" />
 		</Compiler>
 		<Linker>
 			<Add option="-mmcu=atxmega32a4u" />
@@ -75,6 +76,8 @@
 		<Unit filename="../communication/Communication.h" />
 		<Unit filename="../communication/Serial.cpp" />
 		<Unit filename="../communication/Serial.h" />
+		<Unit filename="../timer/timer.cpp" />
+		<Unit filename="../timer/timer.h" />
 		<Unit filename="../xmegaClocks/xmegaClocks.cpp" />
 		<Unit filename="../xmegaClocks/xmegaClocks.h" />
 		<Unit filename="Bed_Functions.cpp" />
@@ -89,20 +92,20 @@
 		<Unit filename="LED.h" />
 		<Unit filename="Licht.cpp" />
 		<Unit filename="Licht.h" />
-		<Unit filename="MyTimer.cpp" />
-		<Unit filename="MyTimer.h" />
 		<Unit filename="PIR.cpp" />
 		<Unit filename="PIR.h" />
 		<Unit filename="RandomTimer.cpp" />
 		<Unit filename="RandomTimer.h" />
-		<Unit filename="SFE_BMP180.cpp" />
 		<Unit filename="SFE_BMP180.h" />
 		<Unit filename="asmdefs.h" />
 		<Unit filename="bh1750.cpp" />
 		<Unit filename="bh1750.h" />
 		<Unit filename="bh1750.hpp" />
 		<Unit filename="gammacorrection.h" />
+		<Unit filename="ledHardware.h" />
 		<Unit filename="myConstants.h" />
+		<Unit filename="myTimers.cpp" />
+		<Unit filename="myTimers.h" />
 		<Unit filename="rc522.hpp" />
 		<Unit filename="rc522_api.cpp" />
 		<Unit filename="tastatur.cpp" />
@@ -112,9 +115,6 @@
 		<Unit filename="watchdog.h" />
 		<Unit filename="ws2812.h" />
 		<Unit filename="ws2812_xmega.S" />
-		<Extensions>
-			<code_completion />
-			<debugger />
-		</Extensions>
+		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

@@ -60,7 +60,7 @@ INFORMATION cnetInformation[NUM_INFORMATION]=
   {klingelNode,'D','0','S',UINT_8,1,(void*)&Zustand_AutoDoor,NULL}
 };
 
-ComReceiver cnetCom(&cmulti,Node, cnetCommands,NUM_COMMANDS, cnetInformation,NUM_INFORMATION);
+ComReceiver cnetCom(&cmulti,Node, cnetCommands,NUM_COMMANDS, cnetInformation,NUM_INFORMATION,NULL,NULL);
 
 void setStatusLichtKlein()
 {

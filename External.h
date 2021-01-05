@@ -31,7 +31,6 @@ extern uint8_t key[16];
 extern uint8_t Actual_Random[2][16];
 extern uint8_t Valid_Random[2];
 
-extern volatile TIMER MyTimers[MYTIMER_NUM];
 extern volatile char actuelle_taste;
 
 extern uint8_t Klingel_LED_Dimmer;
