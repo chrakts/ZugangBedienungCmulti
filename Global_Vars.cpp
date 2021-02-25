@@ -12,18 +12,8 @@
 char const *Node = "ZB";
 char const *klingelNode = "Kg";
 
-char Compilation_Date[] = __DATE__;
-char Compilation_Time[] = __TIME__;
 
-volatile TIMER MyTimers[MYTIMER_NUM]= {	{TM_STOP,RESTART_NO,100,0,Beeper_Ready},
-										{TM_STOP,RESTART_NO,100,0,NULL},			// Eingabe abgelaufen
-										{TM_START,RESTART_NO,250,0,LED_toggle},
-										{TM_STOP,RESTART_NO,500,0,Licht_Gross},
-										{TM_START,RESTART_NO,12000,0,goto_sleep},
-										{TM_STOP,RESTART_NO,250,0,Eingabe_bereit},	// Blockade nach falscher Eingabe
-										{TM_START,RESTART_YES,0,0,Klingel_LED_PWM}	// Blockade nach falscher Eingabe
-
-};
+char sLEDStatus[13];
 
 RandomTimer my_random_timer(&TCC1);
 
@@ -35,21 +25,7 @@ uint8_t Valid_Random[2] = {false,false};
 
 uint8_t Klingel_LED_Dimmer = 5;
 
-uint8_t iLichtKleinStatus=0;
-
-volatile uint8_t do_sleep = 0;
-
-volatile float fHelligkeit=0.0;
-volatile uint16_t iLichtgrenzwert=200,iLichtwertHysterese=50;
-
 uint8_t	Zustand_Eingabe=0;
-uint8_t Zustand_AutoDoor = false;
-
-volatile uint8_t blockade_status = 0;
-uint16_t Blockade_Zeiten[BLOCKADE_NUM] = {250,1000,1000,3000,5000,15000,60000};
-
-volatile uint8_t BlockingStatus = UNBLOCKED;
-uint16_t BlockadeZeiten[BLOCKED_LAST] = {250,1000,1000,3000,5000,15000,60000};
 
 
 volatile char actuelle_taste=0;

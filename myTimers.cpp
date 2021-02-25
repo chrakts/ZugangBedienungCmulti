@@ -9,6 +9,15 @@
 
 extern volatile uint8_t do_sleep;
 
+volatile TIMER MyTimers[MYTIMER_NUM]= {	{TM_STOP,RESTART_NO,100,0,Beeper_Ready},
+										{TM_STOP,RESTART_NO,100,0,NULL},			// Eingabe abgelaufen
+										{TM_START,RESTART_NO,250,0,LED_toggle},
+										{TM_STOP,RESTART_NO,500,0,Licht_Gross},
+										{TM_STOP,RESTART_NO,250,0,Eingabe_bereit},	// Blockade nach falscher Eingabe
+										{TM_START,RESTART_YES,0,0,Klingel_LED_PWM}	// Blockade nach falscher Eingabe
+
+};
+
 void no_function( void )
 {
 	;
@@ -30,18 +39,6 @@ void Licht_Gross(uint8_t test)
 	set_led_color(F_GRUEN,BR_NOCHANGE,LED_LICHT_GROSS);
 }
 
-void goto_sleep(uint8_t test)
-{
-	if( (PORTC_IN & PIR_PIN) > 0) // falls PIR aktiv soll kein Powerdown eingeleitet werden
-	{
-		MyTimers[TIMER_SLEEP].state = TM_RESET;
-	}
-	else
-	{
-		do_sleep = 1;
-	}
-
-}
 
 void Eingabe_bereit(uint8_t test)
 {

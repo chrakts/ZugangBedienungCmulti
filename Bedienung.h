@@ -4,8 +4,6 @@
  * Created: 15.11.2015 20:19:17
  *  Author: Christof
  */
-#define WS_ARCH_XMEGA
-
 #include <avr/io.h>
 #include <stdbool.h>
 #include <avr/pgmspace.h>
@@ -30,11 +28,13 @@
 #include "watchdog.h"
 #include "../Secrets/secrets.h"
 #include "Communication.h"
+#include "cmultiStandardCommands.h"
 #include "xmegaClocks.h"
 #include <string.h>
 #include <util/delay.h>
 #include <avr/sleep.h>
 #include "Licht.h"
+#include "rfCards.h"
 
 #ifndef TEST01_H_
 #define TEST01_H_
