@@ -12,7 +12,6 @@
 char const *Node = "ZB";
 char const *klingelNode = "Kg";
 
-uint8_t i; // muss wieder weg
 char sLEDStatus[13];
 
 RandomTimer my_random_timer(&TCC1);

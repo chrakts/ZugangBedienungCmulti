@@ -9,7 +9,6 @@
 
 int main(void)
 {
-PORT_t *myp;
 uint8_t i;
 	init_clock(SYSCLK,PLL,true,CLOCK_CALIBRATION);
 	WDT_Disable();
@@ -29,8 +28,6 @@ uint8_t i;
 	BEEPER_OFF;
 
 	WS_init();
-	myp = &PORTC;
-	myp->REMAP = 1;
 
 	fill_led_color(F_WEISS,0);
 	refresh_led();
@@ -54,19 +51,17 @@ uint8_t i;
 	AntennaOn();
 	WDT_EnableAndSetTimeout(WDT_SHORT);
 	WDT_Reset();
-	//output(KNET,'E');		// Beendet den Bootloader von "Bedienung"
+
 	do
 	{
 		WDT_Reset();
 		if (PIR_Trigger!=0)
 		{
-			//output_str(KNET,"\\>ZRN<\\");
 			cmulti.sendCommand(klingelNode,'P','1','t');
 			PIR_Trigger = 0;
 		}
 		if (Klingel_Trigger!=0)
 		{
-			//output_str(KNET,"\\>ZZB<\\");
 			cmulti.sendCommand(klingelNode,'K','1','r');
 			Klingel_Trigger = 0;
 			PIR_Trigger = 1;
@@ -74,6 +69,13 @@ uint8_t i;
 			PORTC_OUTCLR = BEL_PIN;
 		}
 /*		rc522_loop();*/
+    if (selectCard(false))
+    {
+      uint8_t cardNum = get_card_number();
+      if( cardNum <25 )
+        cmulti.sendCommand(klingelNode,'C',+ '0'+cardNum ,'f');
+    }
+/*
 		if ( (Zustand_Eingabe!=INPUT_BLOCKADE) && (Zustand_Eingabe!=INPUT_IO) )
 		{
 			if (selectCard(false))
@@ -91,7 +93,7 @@ uint8_t i;
 				}
 
 			}
-		}
+		}*/
 		if (actuelle_taste!=0)
 		{
 			char address='1';

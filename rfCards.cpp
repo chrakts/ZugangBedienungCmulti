@@ -214,8 +214,6 @@ uint8_t info[INFO_LENGTH+1];		// plus eins wegen Kartennummer
 	if(rc522_read_block(SECTOR_CARDNUM,SUB_CARDNUM,defaultKeyA,(char*)info,1))
 	{
 		cardnum = (uint8_t)info[0];
-		if (cardnum>=KEY_NUM)
-			cardnum = 0;
 		return( cardnum );
 	}
 	else
