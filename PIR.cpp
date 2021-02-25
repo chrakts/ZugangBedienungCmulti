@@ -3,7 +3,7 @@
  *
  * Created: 09.02.2016 19:53:11
  *  Author: Christof
- */ 
+ */
 
 #include "Bedienung.h"
 
@@ -18,6 +18,5 @@ void init_PIR()
 
 SIGNAL(PORTC_INT0_vect)
 {
-	MyTimers[TIMER_SLEEP].state = TM_START;
 	PIR_Trigger = 1;
 }
