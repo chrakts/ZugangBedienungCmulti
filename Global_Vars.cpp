@@ -12,8 +12,8 @@
 char const *Node = "ZB";
 char const *klingelNode = "Kg";
 
-char sLEDStatus[13];
-
+char sLEDStatus[13]={C_BLAU,C_WEISS,C_ROT,C_GRUEN,C_LILA,C_GELB,C_ORANGE,C_TUERKIS,C_BRAUN,C_BLAU,'O','E',0};
+bool cardStatus=false;
 RandomTimer my_random_timer(&TCC1);
 
 uint8_t key[16] = { AES256_KEY };

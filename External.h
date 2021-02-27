@@ -22,6 +22,8 @@ extern char Compilation_Date[];
 extern char Compilation_Time[];
 
 extern char sLEDStatus[13];
+extern bool cardStatus;
+
 
 extern RandomTimer my_random_timer;
 
