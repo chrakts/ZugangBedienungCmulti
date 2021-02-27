@@ -49,6 +49,7 @@
 
 
 void gotNewLedStatus();
+void jobReleaseCard(ComReceiver *comRec, char function,char address,char job, void * pMem);
 void jobgotCardKey(ComReceiver *comRec, char function,char address,char job, void * pMem);
 void jobReceiveRandom(ComReceiver *comRec, char function,char address,char job, void * pMem);
 

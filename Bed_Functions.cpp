@@ -7,13 +7,14 @@
 
 #include "Bedienung.h"
 
-#define NUM_COMMANDS 2 + CMULTI_STANDARD_NUM
+#define NUM_COMMANDS 3 + CMULTI_STANDARD_NUM
 
 COMMAND cnetCommands[NUM_COMMANDS] =
 {
   cmultiStandardCommands,
   {'R','s',CUSTOMER,NOPARAMETER,0,jobReceiveRandom},
   {'C','k',CUSTOMER,BYTEARRAY,KEY_LENGTH,jobgotCardKey},
+  {'C','r',CUSTOMER,NOPARAMETER,0,jobReleaseCard},
 };
 
 #define NUM_INFORMATION 1
@@ -31,6 +32,11 @@ void gotNewLedStatus()
   Klingel_LED_Dimmer = (uint8_t)sLEDStatus[12]-65;
 }
 
+void jobReleaseCard(ComReceiver *comRec, char function,char address,char job, void * pMem)
+{
+  cardStatus=false;
+  MyTimers[TIMER_CARDSTATUS].state = TM_STOP;
+}
 void jobgotCardKey(ComReceiver *comRec, char function,char address,char job, void * pMem)
 {
   uint8_t *key = (uint8_t*) pMem;
