@@ -14,7 +14,7 @@ uint8_t i;
 	WDT_Disable();
 	init_io();
 
-  cmulti.open(Serial::BAUD_19200,F_CPU);
+  cmulti.open(Serial::BAUD_57600,F_CPU);
 
 	init_tastatur();
 	init_PIR();
@@ -26,7 +26,7 @@ uint8_t i;
 
 	_delay_ms(11);
 	BEEPER_OFF;
-
+  cmulti.broadcast('Z','Z','Z');
 	WS_init();
 
 	fill_led_color(F_WEISS,0);
@@ -44,9 +44,7 @@ uint8_t i;
 		refresh_led();
 		_delay_ms(20);
 	}
-
-//	test_aes();
-	fill_led_color(F_BLACK,BR_MAX);
+  fill_led_color(F_BLACK,BR_MAX);
 	rc522_setup();
 	AntennaOn();
 	WDT_EnableAndSetTimeout(WDT_SHORT);
@@ -69,31 +67,20 @@ uint8_t i;
 			PORTC_OUTCLR = BEL_PIN;
 		}
 /*		rc522_loop();*/
-    if (selectCard(false))
+    if( cardStatus==false)
     {
-      uint8_t cardNum = get_card_number();
-      if( cardNum <25 )
-        cmulti.sendCommand(klingelNode,'C',+ '0'+cardNum ,'f');
+       if (selectCard(false))
+      {
+        uint8_t cardNum = get_card_number();
+        if( cardNum <25 )
+        {
+          cmulti.sendCommand(klingelNode,'C',+ '0'+cardNum ,'f');
+          cardStatus=true;
+          MyTimers[TIMER_CARDSTATUS].state = TM_START;
+        }
+      }
     }
-/*
-		if ( (Zustand_Eingabe!=INPUT_BLOCKADE) && (Zustand_Eingabe!=INPUT_IO) )
-		{
-			if (selectCard(false))
-			{
-				if (try_card(CARD_STANDARD))
-				{
-					// blockade_status = 0; muss wieder rein !!!!!!!!!!!!!!
-					Zustand_Eingabe = INPUT_IO;
-					MyTimers[TIMER_BLOCKADE].value= TIME_OFF_OPEN_DOOR;
-					MyTimers[TIMER_BLOCKADE].state = TM_START;
-				}
-				else
-				{
-					// make_blocking();   muss wieder rein !!!!!!!!!!!!!!
-				}
 
-			}
-		}*/
 		if (actuelle_taste!=0)
 		{
 			char address='1';
@@ -131,10 +118,7 @@ uint8_t i;
 			cmulti.sendCommand(klingelNode,function,address,job);
       actuelle_taste = 0;
 		}
-		//set_led_autobright( (uint16_t)fHelligkeit );
-		// set_led_autobright(illu.Get_Data());
-		refresh_led();
-
+		refresh_led_new();
 		WDT_Reset();
 	} while (1);
 }
@@ -149,8 +133,6 @@ void init_io()
 	PORTC_DIRCLR = PIR_PIN;
 	PORTD_DIRSET = RC522_RESET_PIN | RC522_SDA_PIN | RC522_MOSI_PIN | RC522_SCK_PIN | LETMASTER_PIN;
 	PORTD_DIRCLR = WANTMASTER_PIN | RC522_IRQ_PIN | RC522_MISO_PIN;
-//	PORTD_DIRSET = RC522_RESET_PIN | RC522_SDA_PIN | RC522_MOSI_PIN | RC522_SCK_PIN;
-//	PORTD_DIRCLR = RC522_IRQ_PIN | RC522_MISO_PIN;
 	PORTE_DIRSET = RS485_TE_PIN | RS485_RE_PIN | RS485_TxD_PIN;
 	PORTE_DIRCLR = RS485_RxD_PIN;
 
