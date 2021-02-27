@@ -11,9 +11,9 @@
 #define EOL "\n\r"
 
 /* ###################### Erster UART ############################ */
-#define USE_RS485_0   // USB-RS232
-#define USE_RS485_FEEDBACK_0
-#define USE_BUSY_0 true
+#undef USE_RS485_0   // USB-RS232
+#undef USE_RS485_FEEDBACK_0
+#define USE_BUSY_0 false
 
 #define UART_PORT_0 E
 #define UART_NUM_0  0
@@ -26,16 +26,16 @@
 /* ###################### ########### ############################ */
 
 /* ###################### Zweiter UART ############################ */
-#undef  USE_RS485_1
-#undef  USE_RS485_FEEDBACK_1
-#define USE_BUSY_1 false
+#define  USE_RS485_1
+#define  USE_RS485_FEEDBACK_1
+#define USE_BUSY_1 true
 
 #define UART_PORT_1 D
 #define UART_NUM_1  0
-#define TE_PIN_1    4
-#define RE_PIN_1    5
-#define TX_PIN_1    7
-#define RX_PIN_1    6
+#define TE_PIN_1    0
+#define RE_PIN_1    1
+#define TX_PIN_1    3
+#define RX_PIN_1    2
 #define USART_RXCINTLVL_1 USART_RXCINTLVL_LO_gc
 #define USART_TXCINTLVL_1 USART_TXCINTLVL_LO_gc
 /* ###################### ########### ############################ */
