@@ -13,7 +13,7 @@ volatile TIMER MyTimers[MYTIMER_NUM]= {	{TM_STOP,RESTART_NO,100,0,Beeper_Ready},
 										{TM_STOP,RESTART_NO,100,0,NULL},			// Eingabe abgelaufen
 										{TM_START,RESTART_NO,250,0,LED_toggle},
 										{TM_STOP,RESTART_NO,500,0,Licht_Gross},
-										{TM_STOP,RESTART_NO,250,0,Eingabe_bereit},	// Blockade nach falscher Eingabe
+										{TM_STOP,RESTART_NO,250,0,resetCardStatus},	// Blockade nach falscher Eingabe
 										{TM_START,RESTART_YES,0,0,Klingel_LED_PWM}	// Blockade nach falscher Eingabe
 
 };
@@ -40,9 +40,9 @@ void Licht_Gross(uint8_t test)
 }
 
 
-void Eingabe_bereit(uint8_t test)
+void resetCardStatus(uint8_t test)
 {
-	Zustand_Eingabe = INPUT_WAIT;
+	cardStatus = false;
 }
 
 void Klingel_LED_PWM(uint8_t test)

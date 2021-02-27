@@ -15,13 +15,13 @@
 #define MYTIMER_NUM	7
 
 
-enum{TIMER_BEEPER_OFF,TIMER_TIMEOUT,TIMER_RECALL,TIMER_LICHT_GROSS,TIMER_BLOCKADE,TIMER_LED_KLINGEL};
+enum{TIMER_BEEPER_OFF,TIMER_TIMEOUT,TIMER_RECALL,TIMER_LICHT_GROSS,TIMER_CARDSTATUS,TIMER_LED_KLINGEL};
 
 void Beeper_Ready(uint8_t test);
 void LED_toggle(uint8_t test);
 void Licht_Gross(uint8_t test);
 void goto_sleep(uint8_t test);
-void Eingabe_bereit(uint8_t test);
+void resetCardStatus(uint8_t test);
 void Klingel_LED_PWM(uint8_t test);
 
 extern volatile TIMER MyTimers[MYTIMER_NUM];
