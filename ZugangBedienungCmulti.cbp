@@ -27,6 +27,7 @@
 					<Add option="-funsigned-char" />
 					<Add option="-funsigned-bitfields" />
 					<Add option="-DNDEBUG" />
+					<Add option="-DF_CPU=32000000UL" />
 					<Add directory="/home/chrak/Downloads/avr8-gnu-toolchain-linux_x86_64/avr/lib/avrxmega2" />
 					<Add directory="/home/chrak/Downloads/avr8-gnu-toolchain-linux_x86_64/avr/include" />
 				</Compiler>
@@ -44,7 +45,6 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-mmcu=atxmega32a4u" />
-			<Add option="-DF_CPU=18432000UL" />
 			<Add option="-DWS_ARCH_XMEGA" />
 			<Add directory="/home/chrak/Daten/Software/repositories/ZugangBedienungCmulti" />
 			<Add directory="/home/chrak/Daten/Software/repositories/xmegaClocks" />
