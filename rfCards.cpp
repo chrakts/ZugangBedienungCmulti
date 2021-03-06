@@ -1,5 +1,32 @@
 #include "Bedienung.h"
 
+// versucht die Karte zu selektieren, wenn erfolgreich, wird geschrieben, wenn nicht wird die Funktion sofort verlassen
+uint8_t writeNewCard(uint8_t cardnum,uint8_t* keyInfo)
+{
+  /*
+  if(selectCard(false))
+  {
+
+    if( rc522_write_key(SECTOR_INFO, defaultKeyA, ckey) )
+    {
+      cmulti.sendInfo("Schlüssel geschrieben.",klingelNode); //output_str(KNET,"Schlüssel geschrieben\n");
+      if ( rc522_write_block(SECTOR_INFO,SUB_INFO,ckey,(char*)info,INFO_LENGTH) ) // Info in Sub 0
+      {
+        cmulti.sendInfo("Info geschrieben.",klingelNode); //output_str(KNET,"Info geschrieben\n");
+        info[0] = cardnum;
+        if ( rc522_write_block(SECTOR_CARDNUM,SUB_CARDNUM,defaultKeyA,(char*)info,1) )	// Kartennummer in Sub 1
+        {
+          cmulti.sendInfo("Nummer geschrieben.",klingelNode); //output_str(KNET,"Nummer geschrieben\n");
+          MFRC522_Init();
+          ret=true;
+        }
+      }
+    }
+  }
+  */
+}
+
+
 uint8_t make_new_card(uint8_t cardnum)
 {
 uint8_t ret = false, temp;

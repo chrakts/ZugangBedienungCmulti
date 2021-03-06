@@ -18,7 +18,7 @@ struct str_farbe
 
 typedef struct str_farbe FARBE;
 
-enum{C_SCHWARZ=65,C_BLAU,C_WEISS,C_ROT,C_GRUEN,C_LILA,C_GELB,C_ORANGE,C_TUERKIS,C_BRAUN};
+enum{C_SCHWARZ=65,C_BLAU,C_WEISS,C_ROT,C_GRUEN,C_LILA,C_ORANGE,C_MAGENTA,C_TUERKIS,C_MINT,C_GELB};
 
 
 #define BR_NOCHANGE 255
@@ -31,7 +31,7 @@ enum{C_SCHWARZ=65,C_BLAU,C_WEISS,C_ROT,C_GRUEN,C_LILA,C_GELB,C_ORANGE,C_TUERKIS,
 #define F_ROT		  0x7f,0x00,0x00
 #define F_GRUEN		0x00,0x7f,0x00
 #define F_LILA		0x7f,0x00,0x7f
-#define F_GELB		0x45,0x35,0x35
+#define F_GELB		0x7f,0x7f,0x35
 #define F_ORANGE	0x7f,0x35,0x35
 #define F_TUERKIS 0x00,0x7f,0x7f
 #define F_BRAUN   0x7f,0x7f,0x00

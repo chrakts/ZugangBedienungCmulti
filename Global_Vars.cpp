@@ -12,7 +12,13 @@
 char const *Node = "ZB";
 char const *klingelNode = "Kg";
 
-char sLEDStatus[13]={C_BLAU,C_WEISS,C_ROT,C_GRUEN,C_LILA,C_GELB,C_ORANGE,C_TUERKIS,C_BRAUN,C_BLAU,'O','E',0};
+volatile bool doNextReport=true;
+volatile uint8_t toReport=REPORT_FIRST;
+
+volatile char sleepOldStatus='S';
+
+#define SLEEPSTATUS 12
+char sLEDStatus[14]={C_BLAU,C_WEISS,C_ROT,C_GRUEN,C_LILA,C_ORANGE,C_MAGENTA,C_MINT,C_TUERKIS,C_GELB,'I','Q','R',0};
 bool cardStatus=false;
 RandomTimer my_random_timer(&TCC1);
 
@@ -33,7 +39,7 @@ volatile uint8_t Klingel_Trigger=0;
 
 char Code[7]="------";
 
-const char SCode[SCODE_NUM][SCODE_LENGTH+1] = {SCODES};
+const char SCode[SPECIAL_NUM][SCODE_LENGTH+1] = {SCODES};
 uchar defaultKeyA[16] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF }; // muss alles 0xff sein !!!
 uchar NDEFKeyA[16] =    { 0xD3, 0xF7, 0xD3, 0xF7, 0xD3, 0xF7 };
 uchar myinfo[16] = "ABABABABABABABA";
@@ -42,3 +48,4 @@ uchar conditionBits_KeyB[10] = { 0xFF , 0x07 , 0x80 , 0x69 , 0x88 , 0x88 , 0x8F 
 uchar diffkey[6] = {0xCE, 0xE0, 0xC0, 0xD2, 0x74, 0xBA};
 
 Communication cmulti(KNET,Node,5,true);
+//ComReceiver cmultiRec(&cmulti,Node,cnetCommands,NUM_CNET_COMMANDS,cnetInformation,NUM_INFORMATION,NULL,NULL);

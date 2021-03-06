@@ -61,8 +61,15 @@
 #define     WS_EVSYS_CH     0           // Eventchannel to use
 #define     WS_WGMODE       0x03        // WGMODE_SS
 
-#define     WS_OUTPIN 4         // output pin
+#ifdef PLUG128
+  #define     WS_OUTPIN 7         // output pin
+#endif // PLUG128
+#ifdef BEDIENUNG_V03
+  #define     WS_OUTPIN 4         // output pin
+#endif // BEDIENUNG_V03
+
 #define     WS_C_PORT
+#define     WS_PIN_INVERT
 
 #if WS_OUTPIN == 0
   #define CCx          CCA

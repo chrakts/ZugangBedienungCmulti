@@ -2,6 +2,7 @@
 #define RFCARDS_H_INCLUDED
 
 
+uint8_t writeNewCard(uint8_t cardnum,uint8_t* keyInfo);
 uint8_t get_card_number();
 uint8_t clear_card();
 uint8_t try_card(uint8_t cardnum);

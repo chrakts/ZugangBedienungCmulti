@@ -12,30 +12,6 @@
 #include "Communication.h"
 #include "ComReceiver.h"
 
-
-
-#define NODE			'B'
-
-#define FUNCTION_RANDOM	'R'
-#define JOB_NEW_RANDOM	'N'
-#define JOB_GET_RANDOM	'G'
-
-#define FUNCTION_ZUGANG	'Z'
-#define JOB_TRY_CODE	'C'
-
-#define FUNCTION_SYSTEM		'S'
-#define JOB_BL_ATTENTION	'A'
-#define JOB_BL_START		'B'
-#define JOB_RESET_ACT		'r'
-#define JOB_RESET			'R'
-#define JOB_DATE			'D'
-#define JOB_TIME			'T'
-
-#define FUNCTION_BOOT	'B'
-#define DO_BOOTLOAD 	's'
-
-#define JOB_ERROR		'!'
-
 #define TRY_CODE_LENGTH		38
 
 #define SECTOR_INFO		1
@@ -48,6 +24,7 @@
 #define CARD_SPECIAL	0
 
 
+void jobWriteCard(ComReceiver *comRec, char function,char address,char job, void * pMem);
 void gotNewLedStatus();
 void jobReleaseCard(ComReceiver *comRec, char function,char address,char job, void * pMem);
 void jobgotCardKey(ComReceiver *comRec, char function,char address,char job, void * pMem);

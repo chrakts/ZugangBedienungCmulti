@@ -10,13 +10,33 @@
 extern volatile uint8_t do_sleep;
 
 volatile TIMER MyTimers[MYTIMER_NUM]= {	{TM_STOP,RESTART_NO,100,0,Beeper_Ready},
+  									{TM_START,RESTART_YES,1000,0,nextReport},
 										{TM_STOP,RESTART_NO,100,0,NULL},			// Eingabe abgelaufen
 										{TM_START,RESTART_NO,250,0,LED_toggle},
 										{TM_STOP,RESTART_NO,500,0,Licht_Gross},
 										{TM_STOP,RESTART_NO,250,0,resetCardStatus},	// Blockade nach falscher Eingabe
-										{TM_START,RESTART_YES,0,0,Klingel_LED_PWM}	// Blockade nach falscher Eingabe
-
+										{TM_START,RESTART_YES,1,0,Klingel_LED_PWM},	// Blockade nach falscher Eingabe
+                    {TM_START,RESTART_YES,1,0,makeAdcMeasure}
 };
+
+void makeAdcMeasure(uint8_t test)
+{
+    if(sLEDStatus[SLEEPSTATUS]=='S')
+    {
+      if(sleepOldStatus != 'S')
+      {
+        initTemperatureMessung();
+        sleepOldStatus = sLEDStatus[SLEEPSTATUS];
+      }
+      startAdcMeasure();
+    }
+		refresh_led_new();
+}
+
+void nextReport(uint8_t test)
+{
+  doNextReport=true;
+}
 
 void no_function( void )
 {
@@ -42,7 +62,10 @@ void Licht_Gross(uint8_t test)
 
 void resetCardStatus(uint8_t test)
 {
+  MyTimers[TIMER_CARDSTATUS].state = TM_STOP;
 	cardStatus = false;
+  MFRC522_Init();
+  _delay_ms(2);
 }
 
 void Klingel_LED_PWM(uint8_t test)

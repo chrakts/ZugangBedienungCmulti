@@ -3,14 +3,4 @@
 
 
 
-//enum{QUARZ,CLK2M,CLK32M};
-
-#define SYSCLK CLK32M
-
-#define PLL 0
-
-#define CLOCK_CALIBRATION 0x83
-
-
-
 #endif // MYCONSTANTS_H_INCLUDED

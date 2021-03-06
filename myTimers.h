@@ -12,11 +12,13 @@
 #include "External.h"
 #include "myConstants.h"
 
-#define MYTIMER_NUM	7
+#define MYTIMER_NUM	8
 
 
-enum{TIMER_BEEPER_OFF,TIMER_TIMEOUT,TIMER_RECALL,TIMER_LICHT_GROSS,TIMER_CARDSTATUS,TIMER_LED_KLINGEL};
+enum{TIMER_BEEPER_OFF,TIMER_NEXT_REPORT,TIMER_TIMEOUT,TIMER_RECALL,TIMER_LICHT_GROSS,TIMER_CARDSTATUS,TIMER_LED_KLINGEL,TIMER_ADC};
 
+void nextReport(uint8_t test);
+void makeAdcMeasure(uint8_t test);
 void Beeper_Ready(uint8_t test);
 void LED_toggle(uint8_t test);
 void Licht_Gross(uint8_t test);

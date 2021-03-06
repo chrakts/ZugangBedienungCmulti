@@ -13,12 +13,9 @@
 #include "output.h"
 
 #include "ws2812.h"
-//#include "encrypt.hpp"
-#include "CRC_Calc.h"
 #include "RandomTimer.h"
 #include "rc522.hpp"
 #include "twi_master_driver.h"
-#include "bh1750.hpp"
 #include "tastatur.h"
 #include "PIR.h"
 #include "Klingel.h"
@@ -35,6 +32,7 @@
 #include <avr/sleep.h>
 #include "Licht.h"
 #include "rfCards.h"
+#include "adcMessung.h"
 
 #ifndef TEST01_H_
 #define TEST01_H_
@@ -44,7 +42,7 @@
 #define KEY_LENGTH 6
 #define INFO_LENGTH 6
 
-#define SCODE_NUM		3
+
 #define SCODE_LENGTH	6
 #define BLOCKADE_NUM	7
 
@@ -125,14 +123,7 @@ enum{UNBLOCKED=0,BLOCKED0,BLOCKED1,BLOCKED2,BLOCKED3,BLOCKED4,BLOCKED5,BLOCKED_L
 
 extern USART_t *mein_serial;
 
-void init_clock();
-void CLKSYS_AutoCalibration_Enable( uint8_t clkSource, bool extReference );
 void init_io();
-void TransmitByte( USART_t *serial, int8_t data );
-void goto_sleep(uint8_t test);
-void new_random();
-//void test_aes();
-uint8_t door_auto_open();
-
+void doReport();
 
 #endif /* TEST01_H_ */

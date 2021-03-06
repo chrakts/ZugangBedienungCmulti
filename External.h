@@ -14,6 +14,10 @@
 #include "Bedienung.h"
 #include "ComReceiver.h"
 
+extern volatile char sleepOldStatus;
+#define SLEEPSTATUS 12
+
+enum{ REPORT_FIRST,REPORT_UPTEMPERATURE,REPORT_LAST};
 
 extern const char *klingelNode;
 extern const char *Node;
@@ -21,10 +25,11 @@ extern const char *Node;
 extern char Compilation_Date[];
 extern char Compilation_Time[];
 
-extern char sLEDStatus[13];
+extern char sLEDStatus[14];
 extern bool cardStatus;
 
-
+extern volatile bool doNextReport;
+extern volatile uint8_t toReport;
 extern RandomTimer my_random_timer;
 
 extern uint8_t key[16];
@@ -58,7 +63,7 @@ extern volatile uint8_t PIR_Trigger;
 extern volatile uint8_t Klingel_Trigger;
 
 extern char Code[7];
-extern const char SCode[SCODE_NUM][SCODE_LENGTH+1];
+extern const char SCode[SPECIAL_NUM][SCODE_LENGTH+1];
 
 extern uchar defaultKeyA[16]; // muss alles 0xff sein !!!
 

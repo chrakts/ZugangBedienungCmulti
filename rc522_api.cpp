@@ -59,7 +59,7 @@ void rc522_setup()
   // start the SPI library:
   // #### SPI.begin();
   rc522_spi = &SPID;
-  rc522_spi->CTRL = SPI_ENABLE_bm | SPI_MODE_0_gc | SPI_MASTER_bm | SPI_PRESCALER_DIV128_gc;
+  rc522_spi->CTRL = SPI_ENABLE_bm | SPI_MODE_0_gc | SPI_MASTER_bm | SPI_PRESCALER_DIV4_gc;
 
 
 /*####  pinMode(chipSelectPin,OUTPUT);         // Set digital pin 10 as OUTPUT to connect it to the RFID /ENABLE pin

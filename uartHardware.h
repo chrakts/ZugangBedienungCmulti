@@ -15,7 +15,7 @@
 #undef USE_RS485_FEEDBACK_0
 #define USE_BUSY_0 false
 
-#define UART_PORT_0 E
+#define UART_PORT_0 C
 #define UART_NUM_0  0
 #define TE_PIN_0    0
 #define RE_PIN_0    1
@@ -30,19 +30,31 @@
 #define  USE_RS485_FEEDBACK_1
 #define USE_BUSY_1 true
 
-#define UART_PORT_1 D
-#define UART_NUM_1  0
-#define TE_PIN_1    0
-#define RE_PIN_1    1
-#define TX_PIN_1    3
-#define RX_PIN_1    2
+#ifdef PLUG128
+  #define UART_PORT_1 D
+  #define UART_NUM_1  0
+  #define TE_PIN_1    0
+  #define RE_PIN_1    1
+  #define TX_PIN_1    3
+  #define RX_PIN_1    2
+#endif // PLUG128
+
+#ifdef BEDIENUNG_V03
+  #define UART_PORT_1 E
+  #define UART_NUM_1  0
+  #define TE_PIN_1    0
+  #define RE_PIN_1    1
+  #define TX_PIN_1    3
+  #define RX_PIN_1    2
+#endif // BEDIENUNG_V03
+
 #define USART_RXCINTLVL_1 USART_RXCINTLVL_LO_gc
 #define USART_TXCINTLVL_1 USART_TXCINTLVL_LO_gc
 /* ###################### ########### ############################ */
 
 /* ###################### Busy-Timer  ############################ */
 // Dieser Timer wird dann für beide Ports verwendet (Timer2 L/H -> belegt damit auch Timer 1!)
-#define BUSY_TIMER_PORT C
+#define BUSY_TIMER_PORT D
 /* ###################### ########### ############################ */
 
 

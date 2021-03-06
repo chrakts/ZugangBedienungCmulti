@@ -6,53 +6,66 @@
  */
 
 #include "Bedienung.h"
+//#undef USE_RF
 
 int main(void)
 {
 uint8_t i;
-	init_clock(SYSCLK,PLL,true,CLOCK_CALIBRATION);
+uint16_t bremse = 0 ;
 	WDT_Disable();
+	init_clock(SYSCLK,PLL,true,CLOCK_CALIBRATION);
 	init_io();
 
   cmulti.open(Serial::BAUD_57600,F_CPU);
 
+#ifdef USE_TASTATUR
 	init_tastatur();
+#endif // USE_TASTATUR
+
+#ifdef USE_PIR
 	init_PIR();
+#endif // USE_PIR
+
 	init_klingel();
 	init_mytimer();
+  //
+
 
 	PMIC_CTRL = PMIC_LOLVLEX_bm | PMIC_HILVLEN_bm | PMIC_MEDLVLEN_bm;
 	sei();
 
+  cmulti.broadcastUInt8((uint8_t) RST.STATUS,'S','0','R');
 	_delay_ms(11);
 	BEEPER_OFF;
-  cmulti.broadcast('Z','Z','Z');
 	WS_init();
+  refresh_led_new();
+	cmulti.sendInfo("Hallo","Bd");
+	_delay_ms(1000);
 
-	fill_led_color(F_WEISS,0);
-	refresh_led();
-	for (i=0;i<=BR_MAX;i++)
+	for (i=0;i<=20;i++)
 	{
-		fill_led_brightness(i);
-		refresh_led();
-		_delay_ms(20);
+    uint8_t temp = sLEDStatus[NUMLEDS-1];
+	  for(int8_t j=NUMLEDS-2;j>=0;j--)
+    {
+      sLEDStatus[j+1] = sLEDStatus[j];
+    }
+	  sLEDStatus[0] = temp;
+    refresh_led_new();
+		_delay_ms(100);
 	}
-	fill_led_color(F_ROT,BR_MAX);
-	for (i=BR_MAX;i>0;i--)
-	{
-		fill_led_brightness(i);
-		refresh_led();
-		_delay_ms(20);
-	}
-  fill_led_color(F_BLACK,BR_MAX);
-	rc522_setup();
-	AntennaOn();
+
+	#ifdef USE_RF
+	  rc522_setup();
+	  AntennaOn();
+	#endif // USE_RF
+
 	WDT_EnableAndSetTimeout(WDT_SHORT);
 	WDT_Reset();
-
 	do
 	{
 		WDT_Reset();
+    cnetCom.comStateMachine();
+    cnetCom.doJob();
 		if (PIR_Trigger!=0)
 		{
 			cmulti.sendCommand(klingelNode,'P','1','t');
@@ -66,11 +79,15 @@ uint8_t i;
 			_delay_ms(500);
 			PORTC_OUTCLR = BEL_PIN;
 		}
-/*		rc522_loop();*/
-    if( cardStatus==false)
+#ifdef USE_RF     /*		rc522_loop();*/
+    bremse++;
+    if( (cardStatus==false) && (bremse>30000) )
     {
-       if (selectCard(false))
+
+      bremse=0;
+      if (selectCard(false))
       {
+        cmulti.sendCommand(klingelNode,'C',+ '0' ,'t');
         uint8_t cardNum = get_card_number();
         if( cardNum <25 )
         {
@@ -79,10 +96,13 @@ uint8_t i;
           MyTimers[TIMER_CARDSTATUS].state = TM_START;
         }
       }
+
     }
+#endif // USE_RF
 
 		if (actuelle_taste!=0)
 		{
+		  LED_ROT_ON;
 			char address='1';
 			char function = 'T';
 			char job='p';
@@ -91,11 +111,11 @@ uint8_t i;
 				case 'A':
           function = 'L';
           job      = 't';
+          address  = '2';
 				break;
 				case 'B':
           function = 'L';
           job      = 't';
-          address  = '2';
 				break;
 				case '#':
 					function = 'P';
@@ -117,9 +137,11 @@ uint8_t i;
 			}
 			cmulti.sendCommand(klingelNode,function,address,job);
       actuelle_taste = 0;
+      LED_ROT_OFF;
 		}
-		refresh_led_new();
+		doReport();
 		WDT_Reset();
+
 	} while (1);
 }
 
@@ -145,5 +167,29 @@ void init_io()
 	PORTD_OUTSET = RC522_SDA_PIN | RC522_MOSI_PIN | RC522_SCK_PIN;
 	PORTD_OUTCLR = RC522_RESET_PIN | LETMASTER_PIN | RC522_MISO_PIN;
 	PORTE_OUTCLR = RS485_TE_PIN | RS485_RE_PIN | RS485_TxD_PIN;
-	PORTE_PIN2CTRL = PORT_OPC_PULLUP_gc;
+	//PORTE_PIN2CTRL = PORT_OPC_PULLUP_gc;
+}
+
+
+void doReport()
+{
+  if(doNextReport)
+  {
+    toReport++;
+    switch(toReport)
+    {
+      case REPORT_UPTEMPERATURE:
+        double temperature;
+        temperature = calcTemperatur();
+        if(temperature>-40.0)
+        {
+          cmulti.broadcastFloat(temperature,'C','1','t');
+        }
+      break;
+      case REPORT_LAST:
+        toReport = REPORT_FIRST;
+      break;
+    }
+  }
+  doNextReport = false;
 }

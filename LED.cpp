@@ -14,16 +14,18 @@ FARBE leds[NUMLEDS] = {F_ROT,F_LILA};
 //uint16_t AutoGain[20]= {2,4,6,10,15,20,40,80,160,320,640,1280,2560,5120,10240,20480,40960,40960,40960,40960};
 uint16_t AutoGain[20]= {0,0,0,10,15,20,40,80,160,320,640,1280,2560,5120,10240,20480,2560,30960,35960,40960};
 uint16_t KlingelGain[6]= {0,0,200,800,10080,40960};
+//                 Rot  GRÜN BLAU
 FARBE iFarbe[16]={{0x00,0x00,0x00},// F_BLACK
                   {0x00,0x00,0x7f},// F_BLAU
                   {0x7f,0x7f,0x7f},// F_WEISS
                   {0x7f,0x00,0x00},// F_ROT
                   {0x00,0x7f,0x00},// F_GRUEN
                   {0x7f,0x00,0x7f},// F_LILA
-                  {0x45,0x35,0x35},// F_GELB
-                  {0x7f,0x35,0x35},// F_ORANGE
+                  {0x7f,0x5f,0x25},// F_ORANGE
+                  {0x7f,0x35,0x35},// F_MAGENTA
                   {0x00,0x7f,0x7f},// F_TUERKIS
-                  {0x7f,0x7f,0x00}// F_BRAUN
+                  {0x7f,0x7f,0x00}, // F_MINT
+                  {0x7f,0x70,0x3f}, // F_GELB
                  };
 
 void refresh_led_new()
@@ -32,11 +34,11 @@ void refresh_led_new()
 	uint8_t i;
 	static uint8_t led_loc[3*NUMLEDS];
 	uint16_t color;
-  uint8_t brightness = ((uint8_t)sLEDStatus[11]-65);
+  uint8_t brightness = ((uint8_t)sLEDStatus[10]-65);
   FARBE f;
 	for (i=0;i<NUMLEDS;i++)
 	{
-    f = iFarbe[(uint8_t)sLEDStatus[11]-65];
+    f = iFarbe[(uint8_t)sLEDStatus[i]-65];
 		color = (f.gruen * brightness)>>4;
 		led_loc[3*i] =	(uint8_t) color;
 		color = (f.rot * brightness)>>4;
@@ -46,10 +48,6 @@ void refresh_led_new()
 	}
 	while (WS_out(led_loc,NUMLEDS*3,GammaTable)!=0)
 	{
-		TEST_TOGGLE;
-		_delay_us(300);
-		TEST_TOGGLE;
-		_delay_us(300);
 	}
 }
 
