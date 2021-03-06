@@ -1,7 +1,7 @@
 #include "Bedienung.h"
 
-#define TSteigung 0.147892720306513
-#define TOffset   -294.872030651341
+#define TSteigung 0.1292763158
+#define TOffset   -224.249
 
 volatile uint16_t temperatureWert;
 volatile uint16_t tempCalib85;
