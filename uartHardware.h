@@ -127,8 +127,8 @@
 #define Busy_Control_TimVec_1  JOIN4(TC,BUSY_TIMER_PORT,2,_HUNF_vect)
 
 
-#define UART0_RING_BUFFER_SIZE 60
-#define UART1_RING_BUFFER_SIZE 60
+#define UART0_RING_BUFFER_SIZE 20
+#define UART1_RING_BUFFER_SIZE 110
 
 extern volatile uint8_t UART0_ring_received;
 extern volatile  char UART0_ring_buffer[UART0_RING_BUFFER_SIZE];
