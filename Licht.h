@@ -3,7 +3,11 @@
 
 #include "Bedienung.h"
 
+extern uint8_t lichtKleinStatus;
+
+
 void nextStatusLichtKlein();
+void aktiviereStromStoss();
 
 
 #endif // LICHT_H_INCLUDED
