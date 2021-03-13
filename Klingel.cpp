@@ -3,7 +3,7 @@
  *
  * Created: 09.02.2016 20:24:18
  *  Author: Christof
- */ 
+ */
 
 #include "Bedienung.h"
 
@@ -16,12 +16,5 @@ void init_klingel()
 
 SIGNAL(PORTB_INT0_vect)
 {
-	
-	_delay_ms(100);
-	if( (PORTB_IN & KLINGEL_TASTER_PIN)==0 )
-	{
-		LED_KLINGEL_TOGGLE;
-		PORTC_OUTSET = BEL_PIN;
-		Klingel_Trigger = 1;
-	}
+	MyTimers[TIMER_START_KLINGEL].state = TM_START;
 }
