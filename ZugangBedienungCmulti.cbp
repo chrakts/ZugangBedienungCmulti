@@ -140,7 +140,6 @@
 		<Unit filename="PIR.h" />
 		<Unit filename="RandomTimer.cpp" />
 		<Unit filename="RandomTimer.h" />
-		<Unit filename="SFE_BMP180.h" />
 		<Unit filename="adcMessung.cpp" />
 		<Unit filename="adcMessung.h" />
 		<Unit filename="ledHardware.h" />
