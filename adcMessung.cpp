@@ -36,15 +36,11 @@ void initTemperatureMessung()
   ADCA.CH0.INTCTRL = ADC_CH_INTMODE_COMPLETE_gc | ADC_CH_INTLVL_LO_gc;
   cli();
   ADCA.CALL = SP_ReadCalibrationByte( 0x0020 );
-  _delay_ms(10);
 	ADCA.CALH = SP_ReadCalibrationByte( 0x0021 );
-  _delay_ms(10);
   //tempCalib85 = ((uint16_t)(SP_ReadCalibrationByte( PRODSIGNATURES_TEMPSENSE1 )))<<8 ;
   //tempCalib85 = ((uint16_t)(SP_ReadCalibrationByte( 0x002F )))<<8 ;
-  _delay_ms(10);
   //tempCalib85 += (uint16_t)SP_ReadCalibrationByte( PRODSIGNATURES_TEMPSENSE0 )
   //tempCalib85 += (uint16_t)SP_ReadCalibrationByte( 0x002E );
-  _delay_ms(10);
 	sei();
   ADCA.CTRLA     = ADC_ENABLE_bm;
 }
