@@ -26,7 +26,6 @@ extern char Compilation_Date[];
 extern char Compilation_Time[];
 
 extern char sLEDStatus[14];
-extern bool cardStatus;
 
 extern volatile bool doNextReport;
 extern volatile uint8_t toReport;

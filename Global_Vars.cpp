@@ -19,7 +19,7 @@ volatile char sleepOldStatus='S';
 
 #define SLEEPSTATUS 12
 char sLEDStatus[14]={C_BLAU,C_WEISS,C_ROT,C_GRUEN,C_LILA,C_ORANGE,C_MAGENTA,C_MINT,C_TUERKIS,C_GELB,'I','Q','R',0};
-bool cardStatus=false;
+
 RandomTimer my_random_timer(&TCC1);
 
 uint8_t key[16] = { AES256_KEY };

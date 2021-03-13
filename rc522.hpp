@@ -3,7 +3,7 @@
  *
  * Created: 06.12.2015 19:44:41
  *  Author: Christof
- */ 
+ */
 
 
 #ifndef RC522_H_
@@ -118,7 +118,6 @@
 //-----------------------------------------------
 
 void rc522_setup();
-void rc522_loop();
 int selectCard(int dumpInfo);
 uint8_t rc522_read_block(uint8_t sector, uint8_t sub, uchar *key, char *info, uint8_t length);
 uint8_t rc522_write_block(uint8_t sector, uint8_t sub, uchar *key, char *info, uint8_t length);

@@ -24,7 +24,10 @@
 #define CARD_SPECIAL	0
 
 
+void jobToggleLight(ComReceiver *comRec, char function,char address,char job, void * pMem);
 void jobWriteCard(ComReceiver *comRec, char function,char address,char job, void * pMem);
+void jobClearCard(ComReceiver *comRec, char function,char address,char job, void * pMem);
+void jobWaitForClear(ComReceiver *comRec, char function,char address,char job, void * pMem);
 void gotNewLedStatus();
 void jobReleaseCard(ComReceiver *comRec, char function,char address,char job, void * pMem);
 void jobgotCardKey(ComReceiver *comRec, char function,char address,char job, void * pMem);

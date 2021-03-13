@@ -29,7 +29,7 @@ uint16_t bremse = 0 ;
 	init_klingel();
 	init_mytimer();
   //
-
+  LED_KLINGEL_ON;
 
 	PMIC_CTRL = PMIC_LOLVLEX_bm | PMIC_HILVLEN_bm | PMIC_MEDLVLEN_bm;
 	sei();
@@ -40,7 +40,6 @@ uint16_t bremse = 0 ;
 	WS_init();
   refresh_led_new();
 	cmulti.sendInfo("Hallo","Bd");
-	_delay_ms(1000);
 
 	for (i=0;i<=20;i++)
 	{
@@ -59,13 +58,17 @@ uint16_t bremse = 0 ;
 	  AntennaOn();
 	#endif // USE_RF
 
-	WDT_EnableAndSetTimeout(WDT_SHORT);
+	WDT_EnableAndSetTimeout(WDT_LONG);
 	WDT_Reset();
 	do
 	{
 		WDT_Reset();
     cnetCom.comStateMachine();
     cnetCom.doJob();
+    if(lichtKleinStatus==0)
+      LICHT_KLEIN_OFF;
+    else
+      LICHT_KLEIN_ON;
 		if (PIR_Trigger!=0)
 		{
 			cmulti.sendCommand(klingelNode,'P','1','t');
@@ -76,33 +79,52 @@ uint16_t bremse = 0 ;
 			cmulti.sendCommand(klingelNode,'K','1','r');
 			Klingel_Trigger = 0;
 			PIR_Trigger = 1;
-			_delay_ms(500);
-			PORTC_OUTCLR = BEL_PIN;
 		}
 #ifdef USE_RF     /*		rc522_loop();*/
     bremse++;
-    if( (cardStatus==false) && (bremse>30000) )
+    if( bremse>30000 )
     {
-
       bremse=0;
-      if (selectCard(false))
+      switch(cardStatus)
       {
-        cmulti.sendCommand(klingelNode,'C',+ '0' ,'t');
-        uint8_t cardNum = get_card_number();
-        if( cardNum <25 )
-        {
-          cmulti.sendCommand(klingelNode,'C',+ '0'+cardNum ,'f');
-          cardStatus=true;
+        case CARD_UNSELECTED:
+          if (selectCard(false))
+          {
+            //cmulti.sendCommand(klingelNode,'C',+ '0' ,'t');
+            uint8_t cardNum = get_card_number();
+            if( cardNum < KEY_NUM )
+            {
+              cmulti.sendCommand(klingelNode,'C',+ '0'+cardNum ,'f');
+            }
+            cardStatus=CARD_SELECTED;
+            MyTimers[TIMER_CARDSTATUS].state = TM_START;
+          }
+        break;
+        case CARD_WAITING_FOR_WRITE:
           MyTimers[TIMER_CARDSTATUS].state = TM_START;
-        }
+          if (selectCard(false))
+          {
+            cardStatus=CARD_SELECTED;
+            writeNewCard(cardNumber,cardKey,cardInfo);
+            MyTimers[TIMER_CARDSTATUS].state = TM_START;
+          }
+        break;
+        case CARD_WAITING_FOR_CLEAR:
+          //to-do:
+          MyTimers[TIMER_CARDSTATUS].state = TM_START;
+          if (selectCard(false))
+          {
+            cardStatus=CARD_SELECTED;
+            cmulti.sendCommand(klingelNode,'C',get_card_number()+'0','s');
+            MyTimers[TIMER_CARDSTATUS].state = TM_START;
+          }
+        break;
       }
-
     }
 #endif // USE_RF
 
 		if (actuelle_taste!=0)
 		{
-		  LED_ROT_ON;
 			char address='1';
 			char function = 'T';
 			char job='p';
@@ -112,6 +134,7 @@ uint16_t bremse = 0 ;
           function = 'L';
           job      = 't';
           address  = '2';
+          aktiviereStromStoss();
 				break;
 				case 'B':
           function = 'L';
@@ -137,7 +160,6 @@ uint16_t bremse = 0 ;
 			}
 			cmulti.sendCommand(klingelNode,function,address,job);
       actuelle_taste = 0;
-      LED_ROT_OFF;
 		}
 		doReport();
 		WDT_Reset();

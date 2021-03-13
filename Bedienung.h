@@ -37,13 +37,7 @@
 #ifndef TEST01_H_
 #define TEST01_H_
 
-#define INFO_NUM 10
-#define KEY_NUM	 6
-#define KEY_LENGTH 6
-#define INFO_LENGTH 6
 
-
-#define SCODE_LENGTH	6
 #define BLOCKADE_NUM	7
 
 #define WDT_SHORT		WDT_PER_1KCLK_gc
